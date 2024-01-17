@@ -1,0 +1,30 @@
+SELECT mov_title
+FROM Movies
+WHERE did = (SELECT did FROM Director WHERE dname = 'Sanjay Leela Bhansali');
+
+SELECT DISTINCT act_name
+FROM Actor
+JOIN Movie_cast ON Actor.act_id = Movie_cast.act_id
+JOIN Movies ON Movie_cast.mov_id = Movies.mov_id
+WHERE mov_year BETWEEN 2016 AND 2018;
+
+SELECT mov_title, rev_stars
+FROM Movies
+JOIN Ratings ON Movies.mov_id = Ratings.mov_id
+ORDER BY rev_stars;
+
+SELECT mov_title
+FROM Movies
+JOIN Movie_cast ON Movies.mov_id = Movie_cast.mov_id
+GROUP BY mov_title
+HAVING COUNT(DISTINCT Movie_cast.act_id) >= 2;
+
+SELECT mov_title, MAX(rev_stars) AS highest_stars
+FROM Movies
+JOIN Ratings ON Movies.mov_id = Ratings.mov_id
+GROUP BY mov_title
+ORDER BY mov_title;
+
+UPDATE Ratings
+SET rev_stars = 5
+WHERE mov_id IN (SELECT mov_id FROM Movies WHERE did = (SELECT did FROM Director WHERE dname = 'Ram Gopal Verma'));
