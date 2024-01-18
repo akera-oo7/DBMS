@@ -1,3 +1,48 @@
+-- Creating Actor table
+CREATE TABLE Actor (
+    act_id INT PRIMARY KEY,
+    act_name VARCHAR(255),
+    act_gender VARCHAR(10)
+);
+
+-- Creating Director table
+CREATE TABLE Director (
+    did INT PRIMARY KEY,
+    dname VARCHAR(255),
+    d_phone VARCHAR(15)
+);
+
+-- Creating Movies table
+CREATE TABLE Movies (
+    mov_id INT PRIMARY KEY,
+    mov_title VARCHAR(255),
+    mov_year INT,
+    did INT,
+    FOREIGN KEY (did) REFERENCES Director(did)
+);
+
+-- Creating Movie_cast table
+CREATE TABLE Movie_cast (
+    act_id INT,
+    mov_id INT,
+    role VARCHAR(255),
+    PRIMARY KEY (act_id, mov_id),
+    FOREIGN KEY (act_id) REFERENCES Actor(act_id),
+    FOREIGN KEY (mov_id) REFERENCES Movies(mov_id)
+);
+
+-- Creating Ratings table
+CREATE TABLE Ratings (
+    rev_id INT PRIMARY KEY,
+    mov_id INT,
+    rev_stars INT,
+    FOREIGN KEY (mov_id) REFERENCES Movies(mov_id)
+);
+
+
+
+//queries
+
 SELECT mov_title
 FROM Movies
 WHERE did = (SELECT did FROM Director WHERE dname = 'Sanjay Leela Bhansali');
