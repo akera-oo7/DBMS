@@ -1,0 +1,63 @@
+-- Creating Team table
+CREATE TABLE Team (
+    team_id INT PRIMARY KEY,
+    name VARCHAR(255),
+    city VARCHAR(255),
+    coach VARCHAR(255),
+    captain_id INT,
+    FOREIGN KEY (captain_id) REFERENCES Player(player_id)
+);
+
+-- Creating Player table
+CREATE TABLE Player (
+    player_id INT PRIMARY KEY,
+    name VARCHAR(255),
+    position VARCHAR(50),
+    skill_level INT,
+    team_id INT,
+    FOREIGN KEY (team_id) REFERENCES Team(team_id)
+);
+
+-- Creating Injury_Record table
+CREATE TABLE Injury_Record (
+    injury_id INT PRIMARY KEY,
+    player_id INT,
+    injury_description VARCHAR(255),
+    FOREIGN KEY (player_id) REFERENCES Player(player_id)
+);
+
+-- Creating Game table
+CREATE TABLE Game (
+    game_id INT PRIMARY KEY,
+    host_team_id INT,
+    guest_team_id INT,
+    game_date DATE,
+    score_host INT,
+    score_guest INT,
+    FOREIGN KEY (host_team_id) REFERENCES Team(team_id),
+    FOREIGN KEY (guest_team_id) REFERENCES Team(team_id)
+);
+
+
+
+-- Inserting sample data into Team table
+INSERT INTO Team (team_id, name, city, coach, captain_id) VALUES
+(1, 'Team A', 'City A', 'Coach A', 1),
+(2, 'Team B', 'City B', 'Coach B', 3);
+
+-- Inserting sample data into Player table
+INSERT INTO Player (player_id, name, position, skill_level, team_id) VALUES
+(1, 'Player 1', 'Forward', 80, 1),
+(2, 'Player 2', 'Defense', 75, 1),
+(3, 'Player 3', 'Goalie', 85, 2),
+(4, 'Player 4', 'Forward', 78, 2);
+
+-- Inserting sample data into Injury_Record table
+INSERT INTO Injury_Record (injury_id, player_id, injury_description) VALUES
+(1, 1, 'Sprained Ankle'),
+(2, 3, 'Concussion');
+
+-- Inserting sample data into Game table
+INSERT INTO Game (game_id, host_team_id, guest_team_id, game_date, score_host, score_guest) VALUES
+(1, 1, 2, '1999-05-11', 4, 2),
+(2, 2, 1, '1999-06-15', 3, 1);
